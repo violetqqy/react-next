@@ -1,0 +1,35 @@
+{
+  "name": "react-next",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server.js",
+    "dev": "node server.js",
+    "build": "next build",
+    "export": "next export",
+    "analyze": "cross-env ANALYZE=1 next build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "VioletQQY <forviolet771@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cross-env": "^5.1.4",
+    "express": "^4.16.3",
+    "isomorphic-unfetch": "^2.0.0",
+    "koa": "^2.5.0",
+    "koa-route": "^3.2.0",
+    "morgan": "^1.9.0",
+    "next": "^5.1.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-redux": "^5.0.7"
+  },
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^2.11.1"
+  }
+}
