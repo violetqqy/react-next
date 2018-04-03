@@ -42,10 +42,11 @@ const Index = (props) => (
 
 Index.getInitialProps = async (context) => {
   const { openId } = context.query
-  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman')
-  const data = await res.json()
+  const res = await fetch('http://10.2.101.103:3008/api')
+  console.log(res.body)
+  const data = res
 
-  console.log(`Show data fetched. Content ${data.length},openId: ${openId}`)
+  // console.log(`Show data fetched. Content ${data.length},openId: ${openId}`)
 
   return {
     shows: data
