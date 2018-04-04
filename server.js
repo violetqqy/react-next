@@ -1,5 +1,4 @@
-// const koa = require('koa')
-// const router = require('koa-route')
+// const koa = require('koa') const router = require('koa-route')
 const express = require('express')
 const next = require('next')
 
@@ -12,9 +11,7 @@ const data = require('./data')
 
 const port = parseInt(process.env.PORT, 10) || 3008
 const dev = process.env.NODE_ENV !== 'production'
-const app = next({
-  dev
-})
+const app = next({dev})
 const handle = app.getRequestHandler()
 
 global.config = {
@@ -43,31 +40,19 @@ function setCookies(res, key, value) {
   });
 }
 
-// function renderApp(res, req, pagePath) {
-//   const openId = request.signedCookies.openId || ''
-//   // const code = req.query.code || ''
-//   const redirect_uri = req.href.split('?')[0]
-
-//   if (openId) {
-//     console.log('[oid]' + openId)
-//     app.render(req, res)
-//     // }
-//     //  else if (code) {
-//     //   console.log('[get]:' + code)
-//     //   axios
-//     //     .get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${global.config.appId}&secret=${global.config.secret}&code=${code}&grant_type=authorization_code`)
-//     //     .then(r => r.json())
-//     //     .then(data => {
-//     //       console.log(data)
-//     //       setCookies(res, 'openId', data.openid)
-//     //       return handle(req, res)
-//     //     })
-//   } else {
-//     console.log('[url]' + redirect_uri)
-//     const reurl = setRedirectUrl(redirect_uri)
-//     res.redirect(reurl)
-//   }
-// }
+// function renderApp(res, req, pagePath) {   const openId =
+// request.signedCookies.openId || ''   // const code = req.query.code || ''
+// const redirect_uri = req.href.split('?')[0]   if (openId) {
+// console.log('[oid]' + openId)     app.render(req, res)     // }     //  else
+// if (code) {     //   console.log('[get]:' + code)     //   axios     //
+// .get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${global.config
+// .
+// appId}&secret=${global.config.secret}&code=${code}&grant_type=authorization_c
+// o de`)     //     .then(r => r.json())     //     .then(data => {     //
+// console.log(data)     //       setCookies(res, 'openId', data.openid)     //
+// return handle(req, res)     //     })   } else {     console.log('[url]' +
+// redirect_uri)     const reurl = setRedirectUrl(redirect_uri)
+// res.redirect(reurl)   } }
 
 app
   .prepare()
@@ -82,10 +67,26 @@ app
       return res.send(data)
     }))
 
-    server.use(router.get('*', (req, res) => {
-      const openId = req.signedCookies.openId || ''
-      const code = req.query.code || ''
-      const redirect_uri = global.config.domain + req.path
+    // server.use(router.get('/', (req, res) => {   const openId =
+    // req.signedCookies.openId || ''   const code = req.query.code || ''   const
+    // redirect_uri = global.config.domain + req.path   if (openId || code) {
+    // console.log('[oid]' + openId)     console.log('[cod]' + code)     // return
+    // handle(req, res)     return app.render(req, res, '/', req.query)   } else {
+    // console.log('[url]' + redirect_uri)     const reurl =
+    // setRedirectUrl(redirect_uri)     return res.redirect(reurl)   } }))
+    // server.get('/login', (req, res) => {   const openId =
+    // req.signedCookies.openId || ''   const code = req.query.code || ''   const
+    // redirect_uri = global.config.domain + req.path   if (openId || code) {
+    // console.log('[oid]' + openId)     console.log('[cod]' + code)     return
+    // app.render(req, res, '/login', req.query)   } else {     console.log('[url]'
+    // + redirect_uri)     const reurl = setRedirectUrl(redirect_uri)     return
+    // res.redirect(reurl)   } })
+
+    server.use(router.get('/', (req, res) => {
+      const openId = req.signedCookies.openId || '';
+      const code = req.query.code || '';
+      console.log(req);
+      const redirect_uri = global.config.domain + req.path;
       if (openId || code) {
         console.log('[oid]' + openId)
         console.log('[cod]' + code)
@@ -96,65 +97,49 @@ app
         return res.redirect(reurl)
       }
     }))
-    // server.get('*', (req, res) => {
-    //   const openId = req.signedCookies.openId || ''
-    //   const code = req.query.code || ''
-    //   console.log(req)
-    //   // const redirect_uri = req.headers.split('?')[0]
-    //   if (openId || code) {
-    //     console.log('[oid]' + openId)
-    //     console.log('[cod]' + code)
-    //     return handle(req, res)
-    //   } else {
-    //     console.log('[url]' + redirect_uri)
-    //     const reurl = setRedirectUrl(redirect_uri)
-    //     return res.redirect(reurl)
-    //   }
-    // })
 
-    // server.get('*', (req, res) => {   const accessToken =
+    server.use(router.get('/login', (req, res) => {
+      const openId = req.signedCookies.openId || '';
+      const code = req.query.code || '';
+      console.log(req);
+      const redirect_uri = global.config.domain + req.path;
+      if (openId || code) {
+        console.log('[oid]' + openId)
+        console.log('[cod]' + code)
+        return handle(req, res)
+      } else {
+        console.log('[url]' + redirect_uri)
+        const reurl = setRedirectUrl(redirect_uri)
+        return res.redirect(reurl)
+      }
+    }))
+
+    server.get('*', (req, res) => {
+      return handle(req, res)
+    })
+    // server.get('*', (req, res) => {    const accessToken =
     // req.signedCookies.accessToken || ''   const code = req.params.code || ''
     // const redirect_uri = req.baseUrl }) server.get('/p/:id', (req, res) => {
     // console.log(req.headers.referer)   const actualPage = '/post'   const
     // queryParams = {     id: req.params.id   }   app.render(req, res, actualPage,
-    // queryParams) })
-
-    // server.get('/', (req, res) => {
-    //   const openId = req.signedCookies.openId || ''
-    //   const code = req.query.code || ''
-    //   const redirect_uri = global.config.domain + req.originalUrl
-    //   if (openId) {
-    //     console.log('[oid]' + openId)
-    //     app.render(req, res, req.originalUrl, {openId: openId})
-    //   } else if (code) {
-    //     console.log('[get]:' + code)
-    //     axios
-    //       .get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${global.config.appId}&secret=${global.config.secret}&code=${code}&grant_type=authorization_code`)
-    //       .then(r => r.json())
-    //       .then(data => {
-    //         console.log(data)
-    //         setCookies(res, 'openId', data.openid)
-    //         return handle(req, res)
-    //       })
-    //   } else {
-    //     console.log('[url]' + redirect_uri)
-    //     const reurl = setRedirectUrl(redirect_uri)
-    //     res.redirect(reurl)
-    //   }
-    // })
-
-    // server.use(async (ctx) => {
-    //   await handle(ctx.req, ctx.res)
-    //   ctx.respond = false
-    // })
-
-    // server.use(async (ctx, next) => {
-    //   ctx.res.statusCode = 200
-    //   await next()
+    // queryParams) }) server.get('/', (req, res) => {   const openId =
+    // req.signedCookies.openId || ''   const code = req.query.code || ''   const
+    // redirect_uri = global.config.domain + req.originalUrl   if (openId) {
+    // console.log('[oid]' + openId)     app.render(req, res, req.originalUrl,
+    // {openId: openId})   } else if (code) {     console.log('[get]:' + code) axios
+    // .get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${global.config
+    // .
+    // appId}&secret=${global.config.secret}&code=${code}&grant_type=authorization_c
+    // o de`)       .then(r => r.json())       .then(data => { console.log(data)
+    // setCookies(res, 'openId', data.openid) return handle(req, res)       }) }
+    // else {     console.log('[url]' + redirect_uri)     const reurl =
+    // setRedirectUrl(redirect_uri) res.redirect(reurl)   } }) server.use(async
+    // (ctx) => {   await handle(ctx.req, ctx.res)   ctx.respond = false })
+    // server.use(async (ctx, next) => {   ctx.res.statusCode = 200   await next()
     // })
 
     server.listen(port, (err) => {
-      if (err)
+      if (err) 
         throw err
       console.log(`> Ready on http://localhost:${port}`)
     })
