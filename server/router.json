@@ -1,0 +1,16 @@
+{
+  "root": "/",
+  "clientRouter": [{
+    "path": "/",
+    "desc": "root"
+  },{
+    "path": "/login",
+    "desc": "login"
+  },{
+    "path": "/",
+    "desc": "root"
+  }],
+  "serverRouter": [{
+    
+  }]
+}

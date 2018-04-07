@@ -14,18 +14,6 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({dev})
 const handle = app.getRequestHandler()
 
-global.config = {
-  userServer: 'http://10.2.10.10/pci-user/',
-  healthServer: 'http://10.2.10.10/pro-health/',
-  server: 'http://10.2.10.10/pci-micro/',
-  fatherServer: 'http://172.18.27.62:8080/pci-operation/',
-  domain: 'http://10.2.101.103:3008',
-  root: '/pci-wechat',
-  filedir: '/Users/wangbing/project/pci-wechat-h5',
-  appId: 'wxee8d9fc7f496d8b1',
-  secret: '4ee061a42331ea76af1430e02e4f6fbe'
-}
-
 function setRedirectUrl(url, state) {
   let uri = encodeURIComponent(url);
   let returnUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${global.config.appId}&redirect_uri=${uri}&response_type=code&scope=snsapi_base&state=${state}#wechat_redirect`;
@@ -66,21 +54,6 @@ app
     server.use(router.get('/api', (req, res) => {
       return res.send(data)
     }))
-
-    // server.use(router.get('/', (req, res) => {   const openId =
-    // req.signedCookies.openId || ''   const code = req.query.code || ''   const
-    // redirect_uri = global.config.domain + req.path   if (openId || code) {
-    // console.log('[oid]' + openId)     console.log('[cod]' + code)     // return
-    // handle(req, res)     return app.render(req, res, '/', req.query)   } else {
-    // console.log('[url]' + redirect_uri)     const reurl =
-    // setRedirectUrl(redirect_uri)     return res.redirect(reurl)   } }))
-    // server.get('/login', (req, res) => {   const openId =
-    // req.signedCookies.openId || ''   const code = req.query.code || ''   const
-    // redirect_uri = global.config.domain + req.path   if (openId || code) {
-    // console.log('[oid]' + openId)     console.log('[cod]' + code)     return
-    // app.render(req, res, '/login', req.query)   } else {     console.log('[url]'
-    // + redirect_uri)     const reurl = setRedirectUrl(redirect_uri)     return
-    // res.redirect(reurl)   } })
 
     server.use(router.get('/', (req, res) => {
       const openId = req.signedCookies.openId || '';
@@ -148,3 +121,5 @@ app
     console.log(ex.stack)
     process.exit(1)
   })
+
+  module.exports = app;
