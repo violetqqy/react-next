@@ -1,0 +1,52 @@
+{
+  "editor.fontSize": 16,
+  "editor.fontFamily": "Source Code Pro",
+  "editor.fontWeight": "200",
+  "editor.lineHeight": 24,
+  "editor.fontLigatures": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "files.exclude": {
+    "**/.idea": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  },
+  "workbench.colorTheme": "Material Theme",
+  "workbench.iconTheme": "eq-material-theme-icons",
+  "workbench.colorCustomizations": {
+    "activityBarBadge.background": "#00BCD4",
+    "list.activeSelectionForeground": "#00BCD4",
+    "list.inactiveSelectionForeground": "#00BCD4",
+    "list.highlightForeground": "#00BCD4",
+    "scrollbarSlider.activeBackground": "#00BCD450",
+    "editorSuggestWidget.highlightForeground": "#00BCD4",
+    "textLink.foreground": "#00BCD4",
+    "progressBar.background": "#00BCD4",
+    "pickerGroup.foreground": "#00BCD4",
+    "tab.activeBorder": "#00BCD4"
+  },
+  "materialTheme.cache.workbench.settings": {
+    "accent": "Cyan",
+    "themeColours": "Default",
+    "accentPrevious": "Sky"
+  },
+  "emmet.includeLanguages": {
+    "vue": "html"
+  },
+  "emmet.syntaxProfiles": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+  // Whether to have initial indent for <style> section
+  "vetur.format.styleInitialIndent": true,
+  // Whether to have initial indent for <script> section
+  "vetur.format.scriptInitialIndent": true,
+  "vetur.format.js.InsertSpaceBeforeFunctionParenthesis": true,
+  "vetur.format.html.wrap_attributes": "auto",
+  "workbench.startupEditor": "newUntitledFile",
+  "team.showWelcomeMessage": false,
+  "beautify.config": ".jsbeautifyrc",
+}
