@@ -11,6 +11,7 @@ import {
 import Head from 'next/head'
 import LoginTelephone from '../components/Login/LoginTelephone'
 import LoginValidCode from '../components/Login/LoginValidCode'
+import LoginPassword from '../components/Login/LoginPassword'
 import {
   LOGIN_STEP
 } from '../components/Login/_login.entity'
@@ -18,7 +19,7 @@ import {
 class Login extends React.Component {
   /**
    * 
-   * @param {step, onStepChange} props 
+   * @param {onComplete} props 
    */
   constructor(props) {
     super(props)
@@ -28,14 +29,48 @@ class Login extends React.Component {
      * password 密码
      */
     this.state = {
+      step: LOGIN_STEP.SET_TELEPHONE,
       telephone: '',
       code: '',
       password: '',
     }
+    this.onStepChange = this.onStepChange.bind(this)
+    this.onCompleteLogin = this.onCompleteLogin.bind(this)
+    this.onCompleteRegister = this.onCompleteRegister.bind(this)
     this.onTelephoneChange = this.onTelephoneChange.bind(this)
     this.onCodeChange = this.onCodeChange.bind(this)
     this.onPasswordChange = this.onPasswordChange.bind(this)
-    this.login = this.login.bind(this)
+  }
+
+  onStepChange(value) {
+    this.setState({
+      step: value
+    })
+  }
+
+  onCompleteLogin(value) {
+    console.log(this.state.telephone)
+    console.log(this.state.code)
+    axios.get('http://10.2.101.149:3008/tel').then(res => {
+      if (res.data.code == 0) {
+        this.props.onComplete(res.data)
+      } else {
+        Toast.info('登录失败')
+      }
+    })
+  }
+
+  onCompleteRegister(value) {
+    console.log(this.state.telephone)
+    console.log(this.state.code)
+    console.log(this.state.password)
+    axios.get('http://10.2.101.149:3008/tel').then(res => {
+      if (res.data.code == 0) {
+        this.props.onComplete(res.data)
+      } else {
+        Toast.info('登录失败')
+      }
+    })
   }
 
   onTelephoneChange(value) {
@@ -56,42 +91,32 @@ class Login extends React.Component {
     })
   }
 
-  login() {
-
-  }
-
   render() {
-    switch (this.props.step) {
+    switch (this.state.step) {
       case LOGIN_STEP.SET_TELEPHONE:
         return (
           <LoginTelephone 
             telephone={this.state.telephone} 
             onTelephoneChange={this.onTelephoneChange} 
-            onStepChange={this.props.onStepChange} />
+            onStepChange={this.onStepChange} />
         )
       case LOGIN_STEP.SET_VALIDCODE:
         return (
           <LoginValidCode
+            telephone={this.state.telephone} 
             code={this.state.code} 
             onCodeChange={this.onCodeChange} 
-            onComplete={this.props.onStepChange} />
+            onComplete={this.onCompleteLogin} />
         )
-
-        // case LOGIN_STEP.SET_PASSWORD:
-        //   return (
-        //     <LoginPassword
-        //       code={this.state.code} 
-        //       onCodeChange={this.onCodeChange} 
-        //       password={this.state.password} 
-        //       onPasswordChange={this.onPasswordChange} 
-        //       onStepChange={this.props.onStepChange} />
-        //   )
-      default:
+      case LOGIN_STEP.SET_PASSWORD:
         return (
-          <LoginTelephone 
+          <LoginPassword
             telephone={this.state.telephone} 
-            onTelephoneChange={this.onTelephoneChange} 
-            onStepChange={this.props.onStepChange} />
+            code={this.state.code} 
+            onCodeChange={this.onCodeChange} 
+            password={this.state.password} 
+            onPasswordChange={this.onPasswordChange} 
+            onComplete={this.onCompleteRegister} />
         )
     }
   }
@@ -109,16 +134,11 @@ export default class extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      step: LOGIN_STEP.SET_TELEPHONE
-    }
-    this.onStepChange = this.onStepChange.bind(this)
+    this.onComplete = this.onComplete.bind(this)
   }
 
-  onStepChange(value) {
-    this.setState({
-      step: value
-    })
+  onComplete(value) {
+    console.log(value)
   }
 
   render() {
@@ -127,7 +147,7 @@ export default class extends React.Component {
         <Head>
           <title>登录</title>
         </Head>
-        <Login step={this.state.step} onStepChange={this.onStepChange} />
+        <Login onComplete={this.onComplete} />
       </div>
     )
   }

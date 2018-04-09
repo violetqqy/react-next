@@ -15,27 +15,30 @@ import {
 export default class LoginValidCode extends React.Component {
   /**
    * 
-   * @param {code, onCodeChange, onComplete} props 
+   * @param {telephone, code, onCodeChange, password, onPasswordChange, onComplete} props 
    */
   constructor(props) {
     super(props)
     this.state = {
       codeValid: false,
       codeMsg: `获取验证码`,
+      passwordValid: false,
     }
-    this.onErrorClick = this.onErrorClick.bind(this)
-    this.onChange = this.onChange.bind(this)
+    this.onCodeErrorClick = this.onCodeErrorClick.bind(this)
+    this.onCodeChange = this.onCodeChange.bind(this)
+    this.onPasswordErrorClick = this.onPasswordErrorClick.bind(this)
+    this.onPasswordChange = this.onPasswordChange.bind(this)
     this.onComplete = this.onComplete.bind(this)
     this.getCode = this.getCode.bind(this)
   }
 
-  onErrorClick() {
+  onCodeErrorClick() {
     if (this.state.codeValid) {
       Toast.info('请输入正确的6位验证码')
     }
   }
 
-  onChange(value) {
+  onCodeChange(value) {
     if (value.length < 6) {
       this.setState({
         codeValid: true
@@ -46,6 +49,25 @@ export default class LoginValidCode extends React.Component {
       })
     }
     this.props.onCodeChange(value)
+  }
+
+  onPasswordErrorClick() {
+    if (this.state.passwordValid) {
+      Toast.info('请设置密码')
+    }
+  }
+
+  onPasswordChange(value) {
+    if (!value) {
+      this.setState({
+        passwordValid: true
+      })
+    } else {
+      this.setState({
+        passwordValid: false
+      })
+    }
+    this.props.onPasswordChange(value)
   }
 
   onComplete() {
@@ -91,20 +113,24 @@ export default class LoginValidCode extends React.Component {
             maxLength='6'
             placeholder='请输入短信验证码'
             error={this.state.codeValid}
-            onErrorClick={this.onErrorClick}
-            onChange={this.onChange}
+            onErrorClick={this.onCodeErrorClick}
+            onChange={this.onCodeChange}
             extra={this.state.codeMsg}
             onExtraClick={this.getCode}
             value={this.props.code} />
+          <InputItem
+            type='password'
+            placeholder='设置密码'
+            error={this.state.passwordValid}
+            onErrorClick={this.onPasswordErrorClick}
+            onChange={this.onPasswordChange}
+            value={this.props.password} />
         </List>
-        <WhiteSpace size='lg' />
-        <WingBlank size='lg'>
-          <div className='text'>该手机已注册，请直接登录</div>
-        </WingBlank>
         <WhiteSpace size='xl' />
         <WingBlank size='lg'>
           <List>
-            <Button type='primary' onClick={this.onComplete} disabled={!this.props.code || this.state.codeValid}>登录</Button>
+            <Button type='primary' onClick={this.onComplete} 
+              disabled={!this.props.code || this.state.codeValid || !this.props.password || this.state.passwordValid}>登录</Button>
           </List>
         </WingBlank>
         <WhiteSpace size='xl' />

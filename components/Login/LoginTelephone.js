@@ -50,7 +50,7 @@ export default class LoginTelephone extends React.Component {
       // axios.get('/').then(res => {
 
       // })
-      if (true) {
+      if (false) {
         this.props.onStepChange(LOGIN_STEP.SET_VALIDCODE)
       } else {
         this.props.onStepChange(LOGIN_STEP.SET_PASSWORD)
