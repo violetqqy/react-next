@@ -2,7 +2,8 @@
   "presets": ["next/babel"],
   "plugins": [
     "transform-decorators-legacy", ["import", {
-      "libraryName": "antd-mobile"
+      "libraryName": "antd-mobile",
+      "style": true
     }],
     [
       "transform-runtime",

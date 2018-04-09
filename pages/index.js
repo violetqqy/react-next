@@ -1,7 +1,7 @@
 import Link from 'next/link'
 // import Header from '../components/Header'
 import Layout from '../components/MyLayout'
-import fetch from 'isomorphic-unfetch'
+import  * as axios from 'axios'
 
 const PostLink = (props) => (
   <li>
@@ -42,9 +42,9 @@ const Index = (props) => (
 
 Index.getInitialProps = async (context) => {
   const { openId } = context.query
-  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman')
+  const res = await axios('https://api.tvmaze.com/search/shows?q=batman')
   console.log(res.body)
-  const data = await res.json()
+  const data = await res.data
 
   // console.log(`Show data fetched. Content ${data.length},openId: ${openId}`)
 
