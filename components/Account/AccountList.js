@@ -1,7 +1,4 @@
 import react from 'react'
-import {
-  List
-} from 'antd-mobile'
 
 class AccountList extends React.Component {
   constructor(props) {
@@ -18,11 +15,19 @@ class AccountList extends React.Component {
             </div>
           </div>
           <div className='left'>
-            <img className='avatar' src='https://avatars1.githubusercontent.com/u/6846593?s=460&v=4' />
+            <img className='avatar' src={this.props.avatar} />
           </div>
-          <div className='right'>
-            {this.props.status}
-          </div>
+          {
+            this.props.status == '申请中' ? (
+              <div className='right red'>
+                {this.props.status}
+              </div>
+            ) : (
+              <div className='right'>
+                {this.props.status}
+              </div>
+            )
+          }
         </div>
         <style jsx>{`
           .box {
@@ -64,6 +69,9 @@ class AccountList extends React.Component {
             height: 36px;
             border-radius: 36px;
           }
+          .red {
+            color: #da322e;
+          }
         `}
         </style>
       </div>
@@ -71,25 +79,4 @@ class AccountList extends React.Component {
   }
 }
 
-class FamilyAccountList extends React.Component {
-    constructor(props) {
-      super(props)
-    }
-
-    render() {
-      return (
-        <div>
-          <List>
-            <List.Item>
-              <AccountList name='章三' status='已添加' />
-            </List.Item>
-            <List.Item>
-              <AccountList name='李四' status='已添加' />
-            </List.Item>
-          </List>
-        </div>
-      )
-  }
-}
-
-export default FamilyAccountList
+export default AccountList

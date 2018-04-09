@@ -7,7 +7,7 @@
     "path": "/login",
     "desc": "login"
   },{
-    "path": "/about",
+    "path": "/account/list",
     "desc": "root"
   }],
   "serverRouter": [{

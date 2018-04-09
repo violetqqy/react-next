@@ -31,6 +31,8 @@ app.prepare().then(() => {
 
     server.use(favicon(path.join(__dirname, 'static', 'favicon.ico')))
 
+    server.use('/static', path.join(__dirname, 'static'))
+
     server.use(router.get('/api', (req, res) => {
       return res.send(data)
     }))
