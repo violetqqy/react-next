@@ -11,10 +11,6 @@
     "analyze": "cross-env ANALYZE=1 next build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "theme": {
-    "brand-primary": "red",
-    "color-text-base": "#333"
-  },
   "keywords": [],
   "author": "VioletQQY <forviolet771@gmail.com>",
   "license": "ISC",
@@ -36,6 +32,7 @@
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "css-loader": "^0.28.11",
+    "emit-file-loader": "0.0.1",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
     "less": "^3.0.1",
